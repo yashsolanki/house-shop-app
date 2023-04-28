@@ -90,6 +90,10 @@ const Profile = () => {
     }
   };
 
+  const onEdit = (listingId) => {
+    navigate(`/edit-listing/${listingId}`);
+  };
+
   return (
     <div className="profile">
       <header className="profileHeader">
@@ -146,6 +150,7 @@ const Profile = () => {
                   listing={listing.data}
                   id={listing.id}
                   onDelete={() => onDelete(listing.id)}
+                  onEdit={() => onEdit(listing.id)}
                 />
               ))}
             </ul>
