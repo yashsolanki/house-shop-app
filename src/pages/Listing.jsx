@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./../firebase.config";
 import Spinner from "./../components/Spinner";
 import shareIcon from "../assets/svg/shareIcon.svg";
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const Listing = () => {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
-
-  // const navigate = useNavigate();
   const params = useParams();
   const auth = getAuth();
 
@@ -36,7 +38,19 @@ const Listing = () => {
 
   return (
     <main>
-      {/* Slider */}
+      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        {listing.imgUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                background: `url(${listing.imgUrls[index]}) center no-repeat`,
+                backgroundSize: "cover",
+              }}
+              className="swiperSlideDiv"
+            ></div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <div className="shareIconDiv">
         <img
           src={shareIcon}
@@ -51,7 +65,6 @@ const Listing = () => {
         />
       </div>
       {shareLinkCopied && <p className="linkCopied">Link Copied!</p>}
-
       <div className="listingDetails">
         <p className="listingName">
           {listing.name} - ₹
@@ -86,10 +99,7 @@ const Listing = () => {
           <li>{listing.parking && "Parking Spot"}</li>
           <li>{listing.furnished && "Furnished"}</li>
         </ul>
-
         <p className="listingLocationTitle">Location</p>
-
-        {/* Leaflet Map */}
         <div className="leafletContainer">
           <MapContainer
             style={{ height: "100%", width: "100%" }}
