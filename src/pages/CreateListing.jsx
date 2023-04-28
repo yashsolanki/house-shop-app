@@ -219,7 +219,7 @@ const CreateListing = () => {
               id="name"
               value={name}
               onChange={onMutate}
-              maxLength="32"
+              maxLength="50"
               minLength="10"
               required
             />
