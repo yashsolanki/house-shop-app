@@ -98,7 +98,6 @@ const EditListing = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
     setLoading(true);
     if (discountedPrice >= regularPrice) {
       setLoading(false);
